@@ -1,24 +1,20 @@
 import yadisk
 import requests
-import json
 
-
-# HS2AIwI9FbTrZ7Cpcjwg  a8a87daaa8a87daaa8a87daa5da8d4c75daa8a8a8a87daaca23154ed94ed1fe9890f718
-# 552934290
-# AQAAAABhgcB4AADLW9120MOiHUUKnkynmtWgB_k
 
 def get_id():
     vk_id = input('Введите идентификатор пользователя VK ')
+    vk_key = input('Введите сервисный ключ пользователя VK ')
     url = 'https://vk.com/id' + vk_id
     if requests.get(url).status_code == 200:
-        return vk_id
+        return vk_id, vk_key
     else:
         print('Перепроверьте Id!')
 
 
-def get_response(id):
-    query = {'access_token': 'a8a87daaa8a87daaa8a87daa5da8d4c75daa8a8a8a87daaca23154ed94ed1fe9890f718',
-             'owner_id': id, 'album_id': 'profile', 'extended': '1', 'photo_sizes': '1', 'v': '5.131'}
+def get_response(id, key):
+    query = {'access_token': key,'owner_id': id, 'album_id': 'profile',
+             'extended': '1', 'photo_sizes': '1', 'v': '5.131'}
     responce = requests.get('https://api.vk.com/method/photos.get', params=query)
     data = responce.json()
     return data
